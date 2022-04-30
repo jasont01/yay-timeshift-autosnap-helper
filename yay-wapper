@@ -1,0 +1,9 @@
+#!/bin/bash
+
+## place within PATH and add alias yay='yay-wrapper'
+
+export __AUTOSNAP_LOCK="$(mktemp -ut "yay-autosnap.lock-XXXXXXX")"
+
+trap "[[ -f $__AUTOSNAP_LOCK ]] && rm -f -- $__AUTOSNAP_LOCK" EXIT
+
+exec /usr/bin/yay --sudoflags="--preserve-env=__AUTOSNAP_LOCK" "${@:--Syu}"
